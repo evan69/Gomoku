@@ -88,6 +88,7 @@ void Dialog::createRoom()
     dia->show();
     dia->exec();
     dia->hide();
+    if(dia->flag) return;
     ip = dia->ip;
     this->show();
     if(dia->flag == 1) ui->pushButton->setEnabled(0);

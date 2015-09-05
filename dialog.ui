@@ -68,14 +68,14 @@
     </rect>
    </property>
    <property name="text">
-    <string>退出房间</string>
+    <string>退出比赛</string>
    </property>
   </widget>
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>0</y>
+     <x>420</x>
+     <y>10</y>
      <width>121</width>
      <height>141</height>
     </rect>
