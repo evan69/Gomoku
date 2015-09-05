@@ -215,6 +215,10 @@ void Dialog::recvMessage()
     if(info.toStdString()[0] == 'd' && info.toStdString()[1] == 'a')
     {
         decodeData(info);
+        vector<QPoint> tmp = selfdata;
+        selfdata = otherdata;
+        otherdata = tmp;
+        ui->label_3->setText("加载残局成功");
         judgeWin();
     }
     update();
@@ -346,10 +350,16 @@ void Dialog::processReturn(int type,bool result)
     {
         if(result == 1)
         {
-            QFile oldData(QFileDialog::getOpenFileName(this,"对方已经同意请求，请打开残局文件"));
+            QString tmp = QFileDialog::getOpenFileName(this,"对方已经同意请求，请打开残局文件");
+            while(tmp == "")
+            {
+                tmp = QFileDialog::getOpenFileName(this,"对方已经同意请求，请打开残局文件");
+            }
+            QFile oldData(tmp);
             oldData.open(QIODevice::ReadWrite);
             decodeData(oldData.readAll());
             socket->write(encodeData().toStdString().c_str());
+            ui->label_3->setText("加载残局成功");
             myTurn = 1;                
         }
         else
@@ -463,6 +473,10 @@ void Dialog::judgeWin()
                 timer->stop();
                 QMessageBox::information(this,"胜利",
                 "您获胜了!共用时" + QString::number(ui->lcdNumber_2->intValue()) + "秒",QMessageBox::Ok);
+                ui->pushButton_3->setEnabled(0);
+                ui->pushButton_4->setEnabled(0);
+                ui->pushButton_5->setEnabled(0);
+                ui->pushButton_6->setEnabled(0);
                 return;
             }
             if(check(otherdata,i,j))
@@ -471,6 +485,10 @@ void Dialog::judgeWin()
                 timer->stop();
                 QMessageBox::information(this,"失败",
                 "您失败了!共用时" + QString::number(ui->lcdNumber_2->intValue()) + "秒",QMessageBox::Ok);
+                ui->pushButton_3->setEnabled(0);
+                ui->pushButton_4->setEnabled(0);
+                ui->pushButton_5->setEnabled(0);
+                ui->pushButton_6->setEnabled(0);
                 return;
             }
         }
@@ -552,7 +570,7 @@ void Dialog::decodeData(QString s)
         if(str[i] >= '0' && str[i] <= '9') y = str[i] - '0';
         else y = str[i] - 'A' + 10;        
         i++;
-        otherdata.push_back(QPoint(x,y));
+        selfdata.push_back(QPoint(x,y));
     }
     i++;
     while(str[i] != '*')
@@ -564,6 +582,6 @@ void Dialog::decodeData(QString s)
         if(str[i] >= '0' && str[i] <= '9') y = str[i] - '0';
         else y = str[i] - 'A' + 10;        
         i++;
-        selfdata.push_back(QPoint(x,y));
+        otherdata.push_back(QPoint(x,y));
     }
 }
