@@ -7,15 +7,14 @@ showIp::showIp(QWidget *parent) :
 {
     flag = 0;
     QString localhostName = QHostInfo::localHostName();
-    QList<QHostAddress> addr = QHostInfo::fromName(localhostName).addresses();
-    
+    QList<QHostAddress> addr = QHostInfo::fromName(localhostName).addresses();    
     for(QList<QHostAddress>::iterator it = addr.begin();it != addr.end();++it)
     {
         if(it->protocol() == QAbstractSocket::IPv6Protocol || it->toString() == "127.0.0.1") continue;
         qDebug() << it->toString();
         ip = it->toString();
         break;
-    }    
+    }
     //ip = "127.0.0.1";
     ui->setupUi(this);
     ui->lineEdit->setText(ip);
