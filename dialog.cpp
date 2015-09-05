@@ -6,6 +6,7 @@
 #include <QDate>
 #include <QFile>
 #include <QFileDialog>
+#include <QSound>
 #include <string>
 #include <fstream>
 using std::string;
@@ -471,6 +472,7 @@ void Dialog::judgeWin()
             {                
                 myTurn = 0;
                 timer->stop();
+                QSound::play(":/sound/win.wav");
                 QMessageBox::information(this,"胜利",
                 "您获胜了!共用时" + QString::number(ui->lcdNumber_2->intValue()) + "秒",QMessageBox::Ok);
                 ui->pushButton_3->setEnabled(0);
@@ -483,6 +485,7 @@ void Dialog::judgeWin()
             {                
                 myTurn = 0;
                 timer->stop();
+                QSound::play(":/sound/lost.wav");
                 QMessageBox::information(this,"失败",
                 "您失败了!共用时" + QString::number(ui->lcdNumber_2->intValue()) + "秒",QMessageBox::Ok);
                 ui->pushButton_3->setEnabled(0);
