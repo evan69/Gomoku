@@ -88,7 +88,7 @@ void Dialog::createRoom()
     dia->show();
     dia->exec();
     dia->hide();
-    if(dia->flag) return;
+    //if(dia->flag) return;
     ip = dia->ip;
     this->show();
     if(dia->flag == 1) ui->pushButton->setEnabled(0);
@@ -274,12 +274,12 @@ void Dialog::adjustTime()
 
 void Dialog::regretMove()
 {
-    timer->stop();
     if(regret >= 2)
     {
         ui->label_3->setText("无法悔棋,至多连续两次悔棋！");
         return;
     }
+    timer->stop();
     if(selfdata.size() < 1 || otherdata.size() < 1)
     {
         ui->label_3->setText("棋子不够，无法悔棋！");
